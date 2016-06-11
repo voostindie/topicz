@@ -1,3 +1,3 @@
-module Topaz
+module Topicz
   VERSION = "0.1.0"
 end

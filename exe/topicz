@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'topicz'
+
+command = Topicz.create_command
+if command != nil
+  begin
+    command.execute
+    exit 0
+  rescue
+    exit -1
+  end
+else
+  puts 'Invalid command. Try topicz without arguments'
+  exit -1
+end

@@ -1,15 +1,15 @@
-# Topaz
+# Topicz
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/topaz`. To experiment with that code, run `bin/console` for an interactive prompt.
+Topicz is a simple topic repository administration tool, where the repository is a regular filesystem.
 
-TODO: Delete this and the text above, and describe your gem
+Run plain `topicz`, and all will become clear...
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'topaz'
+gem 'topicz'
 ```
 
 And then execute:
@@ -18,11 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install topaz
-
-## Usage
-
-TODO: Write usage instructions here
+    $ gem install topicz
 
 ## Development
 
@@ -32,5 +28,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/topaz.
+Bug reports and pull requests are welcome on GitHub at https://github.com/voostindie/topicz.
 
