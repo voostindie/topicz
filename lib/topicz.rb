@@ -6,38 +6,33 @@ module Topicz
 
   def self.create_command(arguments = ARGV, factory = CommandFactory.new)
 
-    subtext = <<HELP
-Where command is one of:
-   init       Initializes a new topic repository
+    commands = {
+        'init' => 'Initializes a new topic repository',
+        'help' => 'Shows help about a command',
+    }
 
-See 'topicz <command> --help' for more information on a specific command.
-HELP
-
-    if arguments.empty?
-      arguments = ["-h"]
-    end
+    config = nil
 
     global = OptionParser.new do |options|
       options.banner = 'Usage: topicz [options] <command> [options]'
       options.program_name = 'topicz'
       options.version = Topicz::VERSION
-      options.on("-h", "--help", "Prints this help") do
-        return factory.create('help', options)
+      options.on('-c', '--config FILE', 'Uses FILE as the configuration file, overriding ~/.topiczrc') do |file|
+        unless File.exist? file
+          raise "File #{file} doesn't exist"
+        end
+        config = file
       end
       options.separator ''
-      options.separator subtext
-    end.parse!(arguments)
-
-    subcommands = {
-        'init' => OptionParser.new do |opts|
-          opts.banner = 'Usage: init'
-        end
-    }
+      options.separator 'Where <command> is one of: '
+      options.separator ''
+      commands.each_pair { |command, description| options.separator "     #{command.ljust(8)}: #{description}" }
+    end.parse! arguments
 
     unless arguments.empty?
       command = arguments.shift
-      if subcommands.include? command
-        return factory.create(command, subcommands[command].parse(arguments))
+      if commands.has_key? command
+        return factory.create(command, config, arguments)
       end
     end
   end

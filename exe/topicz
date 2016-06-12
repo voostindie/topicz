@@ -2,15 +2,19 @@
 
 require 'topicz'
 
-command = Topicz.create_command
-if command != nil
-  begin
+begin
+  command = Topicz.create_command
+  if command != nil
     command.execute
     exit 0
-  rescue
+  else
+    puts 'Invalid command. Try topicz --help'
     exit -1
   end
-else
-  puts 'Invalid command. Try topicz without arguments'
-  exit -1
+rescue Exception => e
+  if e.message != 'exit'
+    puts e.message
+    exit -1
+  end
 end
+

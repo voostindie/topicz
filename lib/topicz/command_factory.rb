@@ -2,7 +2,7 @@ module Topicz
 
   class CommandFactory
 
-    def create(name, options = [])
+    def create(name, config = nil, options = [])
       name
     end
 
