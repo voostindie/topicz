@@ -21,8 +21,14 @@ describe Topicz do
     expect(Topicz.create_command(['foo'])).to be nil
   end
 
-  it 'returns a command when a valid command is specificied' do
-    expect(Topicz.create_command(['init'])).to eq 'init'
+  it 'returns a command when a valid command is specified' do
+    class DummyCommandFactory
+      def create(name, config = nil, options = [])
+        name
+      end
+    end
+    cf = DummyCommandFactory.new
+    expect(Topicz.create_command(['init'], cf)).to eq 'init'
   end
 
   it 'raises an error when referring to an invalid file' do
