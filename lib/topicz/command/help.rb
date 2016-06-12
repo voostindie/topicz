@@ -4,12 +4,13 @@ module Topicz::Command
 
   class Help
 
-    def initialize(arguments = [])
+    def prepare(arguments = [])
       if arguments.empty?
         @command = nil
       else
         @command = arguments.shift
       end
+      self
     end
 
     def requires_config?
@@ -17,10 +18,10 @@ module Topicz::Command
     end
 
     def execute
-      puts @command == nil ? Help.help : Topicz::CommandFactory.new.load_command(@command).help
+      puts @command == nil ? help : Topicz::CommandFactory.new.load_command(@command).new.help
     end
 
-    def self.help
+    def help
       commands = ""
       Topicz::COMMANDS.each_key {|command| commands = commands + "- #{command}\n"}
       "Shows help about a specific command. Valid commands are: \n\n#{commands}"

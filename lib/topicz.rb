@@ -1,4 +1,5 @@
 require 'topicz/version'
+require 'topicz/defaults'
 require 'topicz/command_factory'
 require 'optparse'
 require 'yaml'
@@ -21,7 +22,7 @@ module Topicz
       options.banner = 'Usage: topicz [options] <command> [options]'
       options.program_name = 'topicz'
       options.version = Topicz::VERSION
-      options.on('-c', '--config FILE', 'Uses FILE as the configuration file, overriding ~/.topiczrc') do |file|
+      options.on('-c', '--config FILE', 'Uses FILE as the configuration file') do |file|
         @config_file = file
       end
       options.separator ''
@@ -41,7 +42,7 @@ module Topicz
   end
 
   def self.load_config
-    file = @config_file != nil ? @config_file : File.join(Dir.home, '.topiczrc')
+    file = @config_file != nil ? @config_file : Topicz::DEFAULT_CONFIG_LOCATION
     unless File.exist? file
       raise "File doesn't exist: #{file}."
     end

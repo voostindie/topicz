@@ -16,7 +16,7 @@ module Topicz
     end
 
     def create_command(name, arguments = [])
-      load_command(name).new(arguments)
+      load_command(name).new.prepare(arguments)
     end
 
   end

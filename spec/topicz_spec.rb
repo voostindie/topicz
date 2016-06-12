@@ -43,7 +43,7 @@ describe Topicz do
     Topicz.config_file = nil
     FakeFS do
       FakeFS::FileSystem.add(Dir.home)
-      File.write(File.join(Dir.home, '.topiczrc'), 'repository: /tmp')
+      File.write(Topicz::DEFAULT_CONFIG_LOCATION, 'repository: /tmp')
       FakeFS::FileSystem.add('/tmp')
       expect(Topicz.load_config).not_to be nil
     end
@@ -57,7 +57,7 @@ describe Topicz do
         fail('Should raise an exception...')
       end
     rescue Exception => e
-      expect(e.message).to eq "File doesn't exist: #{File.join(Dir.home, '.topiczrc')}."
+      expect(e.message).to eq "File doesn't exist: #{Topicz::DEFAULT_CONFIG_LOCATION}."
     end
   end
 
@@ -66,7 +66,7 @@ describe Topicz do
     begin
       FakeFS do
         FakeFS::FileSystem.add(Dir.home)
-        File.write(File.join(Dir.home, '.topiczrc'), 'repository: /tmp')
+        File.write(Topicz::DEFAULT_CONFIG_LOCATION, 'repository: /tmp')
         Topicz.load_config
         fail('Should raise an exception...')
       end
@@ -80,12 +80,12 @@ describe Topicz do
     begin
       FakeFS do
         FakeFS::FileSystem.add(Dir.home)
-        File.write(File.join(Dir.home, '.topiczrc'), '@foo')
+        File.write(Topicz::DEFAULT_CONFIG_LOCATION, '@foo')
         Topicz.load_config
         fail('Should raise an exception...')
       end
     rescue Exception => e
-      expect(e.message).to eq "Not a valid YAML file: #{File.join(Dir.home, '.topiczrc')}."
+      expect(e.message).to eq "Not a valid YAML file: #{Topicz::DEFAULT_CONFIG_LOCATION}."
     end
   end
 
@@ -94,12 +94,12 @@ describe Topicz do
     begin
       FakeFS do
         FakeFS::FileSystem.add(Dir.home)
-        File.write(File.join(Dir.home, '.topiczrc'), 'foo: bar')
+        File.write(Topicz::DEFAULT_CONFIG_LOCATION, 'foo: bar')
         Topicz.load_config
         fail('Should raise an exception...')
       end
     rescue Exception => e
-      expect(e.message).to eq "Missing required property 'repository' in configuration file: #{File.join(Dir.home, '.topiczrc')}."
+      expect(e.message).to eq "Missing required property 'repository' in configuration file: #{Topicz::DEFAULT_CONFIG_LOCATION}."
     end
   end
 end
