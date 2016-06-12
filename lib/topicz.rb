@@ -28,9 +28,7 @@ module Topicz
       options.separator ''
       options.separator 'Where <command> is one of: '
       options.separator ''
-      Topicz::COMMANDS.each_pair do |command, description|
-        options.separator "     #{command.ljust(8)}: #{description}"
-      end
+      options.separator Topicz::COMMANDS.to_s
     end.parse! arguments
 
     unless arguments.empty?

@@ -1,11 +1,11 @@
 require 'spec_helper'
-require 'topicz/command/init'
+require 'topicz/commands/init_command'
 
-describe Topicz::Command::Init do
+describe Topicz::Commands::InitCommand do
 
   it 'requires one argument' do
     begin
-      Topicz::Command::Init.new.prepare
+      Topicz::Commands::InitCommand.new.execute
       fail
     rescue Exception => e
       expect(e.message).to eq 'Pass the location of the new repository as an argument.'
@@ -16,7 +16,7 @@ describe Topicz::Command::Init do
     begin
       FakeFS do
         FakeFS::FileSystem.add('/tmp')
-        Topicz::Command::Init.new.prepare(['/tmp']).execute
+        Topicz::Commands::InitCommand.new(['/tmp']).execute
       end
       fail
     rescue Exception => e
@@ -27,7 +27,9 @@ describe Topicz::Command::Init do
   it 'executes when the directory doesn\'t yet exist' do
     FakeFS do
       FakeFS::FileSystem.add(Dir.home)
-      expect(Topicz::Command::Init.new.prepare(['/tmp']).execute).to be true
+      expect {
+        Topicz::Commands::InitCommand.new(['/tmp']).execute
+      }.to output(/New topic repository created/).to_stdout
     end
   end
 
@@ -35,29 +37,35 @@ describe Topicz::Command::Init do
     FakeFS do
       FakeFS::FileSystem.add(Dir.home)
       File.write(Topicz::DEFAULT_CONFIG_LOCATION, 'foo')
-      expect(Topicz::Command::Init.new.prepare(['/tmp']).create_configuration).to be false
+      init = Topicz::Commands::InitCommand.new(['/tmp'])
+      init.init
+      expect { init.create_configuration }.to output(/Skipping creation of configuration file/).to_stdout
     end
   end
 
   it 'creates a configuration file if none exists' do
     FakeFS do
       FakeFS::FileSystem.add(Dir.home)
-      expect(Topicz::Command::Init.new.prepare(['/tmp']).create_configuration).to be true
+      init = Topicz::Commands::InitCommand.new(['/tmp'])
+      init.init
+      expect { init.create_configuration }.to output(/#{Topicz::DEFAULT_CONFIG_LOCATION}/).to_stdout
     end
   end
 
   it 'supports an alternative configuration file' do
     FakeFS do
-      expect(Topicz::Command::Init.new.prepare(['-c', '/config', '/tmp']).create_configuration).to be true
+      init = Topicz::Commands::InitCommand.new(['-c', '/config', '/tmp'])
+      init.init
+      expect { init.create_configuration }.to output(/\/config/).to_stdout
       expect(File.exist? '/config').to be true
     end
   end
 
   it 'doesn\'t require a configuration' do
-    expect(Topicz::Command::Init.new.prepare(["/tmp"]).requires_config?).to be false
+    expect(Topicz::Commands::InitCommand.new(["/tmp"]).requires_config?).to be false
   end
 
   it 'supports help' do
-    expect(Topicz::Command::Init.new.help).to include 'Initializes a new topic repository.'
+    expect(Topicz::Commands::InitCommand.new.option_parser.to_s).to include 'Initializes a new topic repository.'
   end
 end

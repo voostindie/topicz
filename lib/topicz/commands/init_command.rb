@@ -1,11 +1,12 @@
 require 'topicz/defaults'
+require 'topicz/commands/base_command'
 require 'fileutils'
 require 'optparse'
 require 'yaml'
 
-module Topicz::Command
+module Topicz::Commands
 
-  class Init
+  class InitCommand < BaseCommand
 
     def option_parser
       OptionParser.new do |options|
@@ -14,33 +15,30 @@ module Topicz::Command
           @config_file = file
         end
         options.separator ''
-        options.separator <<HELP
-Initializes a new topic repository. This creates a directory and writes its
-location into a configuration file.
-
-If the directory already exists, this command fails.
-
-If a configuration file already exists, it will not be overwritten.
-HELP
+        options.separator 'Initializes a new topic repository. This creates a directory and writes its
+location into a configuration file.'
+        options.separator ''
+        options.separator 'If the directory already exists, this command fails.'
+        options.separator ''
+        options.separator 'If a configuration file already exists, it will not be overwritten.'
       end
-    end
-
-    def prepare(arguments = [])
-      @config_file = Topicz::DEFAULT_CONFIG_LOCATION
-      option_parser.parse! arguments
-      if arguments.empty?
-        raise 'Pass the location of the new repository as an argument.'
-      else
-        @repository = arguments.shift
-      end
-      self
     end
 
     def requires_config?
       false
     end
 
-    def execute
+    def init
+      @config_file = Topicz::DEFAULT_CONFIG_LOCATION
+      option_parser.parse! @arguments
+      if @arguments.empty?
+        raise 'Pass the location of the new repository as an argument.'
+      else
+        @repository = @arguments.shift
+      end
+    end
+
+    def run
       if File.exist? @repository
         raise "A file or directory already exists at this location: #{@repository}."
       end
@@ -63,10 +61,6 @@ HELP
       end
       puts "Configuration file saved to: #{@config_file}."
       true
-    end
-
-    def help
-      option_parser.to_s
     end
 
   end

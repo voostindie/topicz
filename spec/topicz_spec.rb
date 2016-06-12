@@ -15,7 +15,7 @@ describe Topicz do
 
   it 'prints help when called with -h' do
     begin
-      Topicz.create_command(['-h'], cf)
+      expect { Topicz.create_command(['-h'], cf) }.to output(/Usage: topicz/).to_stdout
     rescue Exception => e
       expect(e.message).to eq 'exit'
     end
