@@ -29,7 +29,7 @@ module Topicz
       options.separator 'Where <command> is one of: '
       options.separator ''
       options.separator Topicz::COMMANDS.to_s
-    end.parse! arguments
+    end.order! arguments
 
     unless arguments.empty?
       command = arguments.shift

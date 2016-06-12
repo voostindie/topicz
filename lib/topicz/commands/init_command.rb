@@ -30,7 +30,7 @@ location into a configuration file.'
 
     def init
       @config_file = Topicz::DEFAULT_CONFIG_LOCATION
-      option_parser.parse! @arguments
+      option_parser.order! @arguments
       if @arguments.empty?
         raise 'Pass the location of the new repository as an argument.'
       else
@@ -54,14 +54,12 @@ location into a configuration file.'
     def create_configuration
       if File.exist? @config_file
         puts "Skipping creation of configuration file; one already exists at #{@config_file}."
-        return false
+      else
+        File.open(@config_file, 'w') do |file|
+          file.write(YAML.dump({'repository' => @repository}))
+        end
+        puts "Configuration file saved to: #{@config_file}."
       end
-      File.open(@config_file, 'w') do |file|
-        file.write(YAML.dump({'repository' => @repository}))
-      end
-      puts "Configuration file saved to: #{@config_file}."
-      true
     end
-
   end
 end

@@ -11,7 +11,7 @@ module Topicz::Commands
         options.separator ''
         options.separator 'Shows help about a specific command. Valid commands are:'
         options.separator ''
-        options.separator Topicz::COMMANDS
+        options.separator Topicz::COMMANDS.to_s
       end
     end
 
@@ -20,7 +20,8 @@ module Topicz::Commands
     end
 
     def init
-      @option_parser =
+      option_parser.order! @arguments
+      @help =
           if @arguments.empty?
             self
           else
@@ -29,7 +30,7 @@ module Topicz::Commands
     end
 
     def run
-      puts @option_parser
+      puts @help.help
     end
   end
 end
