@@ -2,5 +2,3 @@ source 'https://rubygems.org'
 
 # Specify your gem's dependencies in topicz.gemspec
 gemspec
-
-gem 'fakefs', require: 'fakefs/safe'
