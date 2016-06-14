@@ -21,15 +21,11 @@ describe Topicz::Repository do
       FakeFS::File.write('/topics/topic1/topic.yaml', YAML.dump(
           {
               'id' => 'topic_1',
-              'title' => 'Special topic',
-              'aliases' => ['1']
+              'title' => 'Special topic'
           }
       ))
       repository = Topicz::Repository.new('/topics')
       topic = repository.topics[0]
-      puts topic.inspect
-      puts topic.id
-      puts topic.title
       expect(topic.id).to eq 'topic_1'
       expect(topic.title).to eq 'Special topic'
       expect(topic.fullpath).to eq '/topics/topic1'
