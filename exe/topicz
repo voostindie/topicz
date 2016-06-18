@@ -1,20 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'topicz'
+require 'topicz/application'
 
 begin
-  command = Topicz.create_command
-  if command != nil
-    if command.requires_config?
-      command.execute Topicz.load_config
-    else
-      command.execute
-    end
-    exit 0
-  else
-    puts 'Invalid command. Try topicz --help'
-    exit -1
-  end
+  Topicz::Application.new.run
 rescue Exception => e
   if e.message != 'exit' # There's probably a better way to do this...
     puts e.message
