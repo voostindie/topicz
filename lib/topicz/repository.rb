@@ -32,6 +32,10 @@ module Topicz
       @topics.values
     end
 
+    def find_all(filter = nil)
+      @topics.values.select { |t| t.matches(filter) }
+    end
+
   end
 
   class Topic
@@ -62,8 +66,10 @@ module Topicz
     # The filter may be `nil`, in which case it is said to match.
     def matches(filter)
       return true unless filter
+      filter.downcase!
       @title.downcase.include?(filter) ||
-          !(@aliases.select { |a| a.downcase.include?(filter) }.empty?)
+          !(@aliases.select { |a| a.downcase.include?(filter) }.empty?) ||
+          @path.downcase.include?(filter)
     end
 
     # Full path to this topic on disk
