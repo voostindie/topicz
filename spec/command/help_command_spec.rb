@@ -8,11 +8,7 @@ describe Topicz::Commands::HelpCommand do
   end
 
   it 'prints information on a single command when one is given' do
-    expect { Topicz::Commands::HelpCommand.new(['init']).execute }.to output(/init/).to_stdout
-  end
-
-  it 'doesn\'t require a configuration' do
-    expect(Topicz::Commands::HelpCommand.new.requires_config?).to be false
+    expect { Topicz::Commands::HelpCommand.new(['help']).execute }.to output(/help/).to_stdout
   end
 
 end

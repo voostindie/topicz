@@ -1,9 +1,18 @@
-require_relative 'base_command'
 require 'topicz/command_factory'
 
 module Topicz::Commands
 
-  class HelpCommand < BaseCommand
+  class HelpCommand
+
+    def initialize(config_file = nil, arguments = [])
+      option_parser.order! arguments
+      @help =
+          if arguments == nil || arguments.empty?
+            self
+          else
+            Topicz::CommandFactory.new.load_command(arguments.shift).new
+          end.option_parser
+    end
 
     def option_parser
       OptionParser.new do |options|
@@ -15,21 +24,7 @@ module Topicz::Commands
       end
     end
 
-    def requires_config?
-      false
-    end
-
-    def init
-      option_parser.order! @arguments
-      @help =
-          if @arguments.empty?
-            self
-          else
-            Topicz::CommandFactory.new.load_command(@arguments.shift).new
-          end.option_parser
-    end
-
-    def run
+    def execute
       puts @help.help
     end
   end

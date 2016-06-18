@@ -16,7 +16,7 @@ describe Topicz::Commands::InitCommand do
     begin
       FakeFS do
         FakeFS::FileSystem.add('/tmp')
-        Topicz::Commands::InitCommand.new(['/tmp']).execute
+        Topicz::Commands::InitCommand.new({}, ['/tmp']).execute
       end
       fail
     rescue Exception => e
@@ -28,7 +28,7 @@ describe Topicz::Commands::InitCommand do
     FakeFS do
       FakeFS::FileSystem.add(Dir.home)
       expect {
-        Topicz::Commands::InitCommand.new(['/tmp']).execute
+        Topicz::Commands::InitCommand.new({}, ['/tmp']).execute
       }.to output(/New topic repository created/).to_stdout
     end
   end
@@ -37,8 +37,7 @@ describe Topicz::Commands::InitCommand do
     FakeFS do
       FakeFS::FileSystem.add(Dir.home)
       File.write(Topicz::DEFAULT_CONFIG_LOCATION, 'foo')
-      init = Topicz::Commands::InitCommand.new(['/tmp'])
-      init.init
+      init = Topicz::Commands::InitCommand.new({}, ['/tmp'])
       expect { init.create_configuration }.to output(/Skipping creation of configuration file/).to_stdout
     end
   end
@@ -46,23 +45,17 @@ describe Topicz::Commands::InitCommand do
   it 'creates a configuration file if none exists' do
     FakeFS do
       FakeFS::FileSystem.add(Dir.home)
-      init = Topicz::Commands::InitCommand.new(['/tmp'])
-      init.init
+      init = Topicz::Commands::InitCommand.new({}, ['/tmp'])
       expect { init.create_configuration }.to output(/#{Topicz::DEFAULT_CONFIG_LOCATION}/).to_stdout
     end
   end
 
   it 'supports an alternative configuration file' do
     FakeFS do
-      init = Topicz::Commands::InitCommand.new(['-c', '/config', '/tmp'])
-      init.init
+      init = Topicz::Commands::InitCommand.new({}, ['-c', '/config', '/tmp'])
       expect { init.create_configuration }.to output(/\/config/).to_stdout
       expect(File.exist? '/config').to be true
     end
-  end
-
-  it 'doesn\'t require a configuration' do
-    expect(Topicz::Commands::InitCommand.new(["/tmp"]).requires_config?).to be false
   end
 
   it 'supports help' do

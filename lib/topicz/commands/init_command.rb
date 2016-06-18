@@ -1,12 +1,19 @@
 require 'topicz/defaults'
-require 'topicz/commands/base_command'
 require 'fileutils'
 require 'optparse'
 require 'yaml'
 
 module Topicz::Commands
 
-  class InitCommand < BaseCommand
+  class InitCommand
+
+    def initialize(config_file = nil, arguments = [])
+      @config_file = Topicz::DEFAULT_CONFIG_LOCATION
+      option_parser.order! arguments
+      unless arguments.empty?
+        @directory = arguments.shift
+      end
+    end
 
     def option_parser
       OptionParser.new do |options|
@@ -24,31 +31,20 @@ location into a configuration file.'
       end
     end
 
-    def requires_config?
-      false
-    end
-
-    def init
-      @config_file = Topicz::DEFAULT_CONFIG_LOCATION
-      option_parser.order! @arguments
-      if @arguments.empty?
+    def execute
+      unless @directory
         raise 'Pass the location of the new repository as an argument.'
-      else
-        @repository = @arguments.shift
       end
-    end
-
-    def run
-      if File.exist? @repository
-        raise "A file or directory already exists at this location: #{@repository}."
+      if File.exist? @directory
+        raise "A file or directory already exists at this location: #{@directory}."
       end
       create_repository
       create_configuration
     end
 
     def create_repository
-      FileUtils.mkdir_p(@repository)
-      puts "New topic repository created at: #{@repository}."
+      FileUtils.mkdir_p(@directory)
+      puts "New topic repository created at: #{@directory}."
     end
 
     def create_configuration
@@ -56,7 +52,7 @@ location into a configuration file.'
         puts "Skipping creation of configuration file; one already exists at #{@config_file}."
       else
         File.open(@config_file, 'w') do |file|
-          file.write(YAML.dump({'repository' => @repository}))
+          file.write(YAML.dump({'repository' => @directory}))
         end
         puts "Configuration file saved to: #{@config_file}."
       end

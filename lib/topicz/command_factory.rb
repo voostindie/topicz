@@ -1,13 +1,6 @@
+require 'topicz/commands/_index'
+
 module Topicz
-
-  COMMANDS = {
-      'init' => 'Initializes a new topic repository',
-      'help' => 'Shows help about a command',
-  }
-
-  def COMMANDS.to_s
-    COMMANDS.collect { |command, description| "  #{command.ljust(6)}: #{description}" }.join("\n")
-  end
 
   class CommandFactory
 
@@ -19,8 +12,8 @@ module Topicz
       Object.const_get("Topicz::Commands::#{name.capitalize}Command")
     end
 
-    def create_command(name, arguments = [])
-      load_command(name).new(arguments)
+    def create_command(name, config_file = nil, arguments = [])
+      load_command(name).new(config_file, arguments)
     end
 
   end
