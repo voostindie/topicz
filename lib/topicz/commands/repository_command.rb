@@ -35,7 +35,7 @@ module Topicz::Commands
       unless Dir.exist? directory
         raise "Repository directory doesn't exist: #{directory}."
       end
-      Repository.new(directory)
+      Topicz::Repository.new(directory)
     end
   end
 end

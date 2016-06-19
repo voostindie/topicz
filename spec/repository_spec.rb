@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'testdata'
 require 'topicz/repository'
 
 describe Topicz::Repository do
@@ -15,61 +16,47 @@ describe Topicz::Repository do
   end
 
   it 'should read a topic YAML file' do
-    create_testdata
-    topic = @repository.topics[0]
-    expect(topic.id).to eq 'topic_1'
-    expect(topic.title).to eq 'Special topic'
-    expect(topic.fullpath).to eq '/topics/topic1'
+    with_testdata do
+      @repository = Topicz::Repository.new('/topics')
+      topic = @repository.topics[0]
+      expect(topic.id).to eq 'topic_1'
+      expect(topic.title).to eq 'Special topic'
+      expect(topic.fullpath).to eq '/topics/topic1'
+    end
   end
 
   it 'should find a topic based on the path' do
-    create_testdata
-    topics = @repository.find_all('topic1')
-    expect(topics.length).to be 1
-    expect(topics[0].id).to eq 'topic_1'
+    with_testdata do
+      @repository = Topicz::Repository.new('/topics')
+      topics = @repository.find_all('topic1')
+      expect(topics.length).to be 1
+      expect(topics[0].id).to eq 'topic_1'
+    end
   end
 
   it 'should find a topic based on the title' do
-    create_testdata
-    topics = @repository.find_all('Special topic')
-    expect(topics.length).to be 1
-    expect(topics[0].id).to eq 'topic_1'
+    with_testdata do
+      @repository = Topicz::Repository.new('/topics')
+      topics = @repository.find_all('Special topic')
+      expect(topics.length).to be 1
+      expect(topics[0].id).to eq 'topic_1'
+    end
   end
 
   it 'should find a topic based on an alias' do
-    create_testdata
-    topics = @repository.find_all('alias1')
-    expect(topics.length).to be 1
-    expect(topics[0].id).to eq 'topic_1'
+    with_testdata do
+      @repository = Topicz::Repository.new('/topics')
+      topics = @repository.find_all('alias1')
+      expect(topics.length).to be 1
+      expect(topics[0].id).to eq 'topic_1'
+    end
   end
 
   it 'should find all topics with an empty search filter' do
-    create_testdata
-    topics = @repository.find_all
-    expect(topics.length).to be 3
-  end
-
-  def create_testdata
-    FakeFS do
-      FakeFS::FileSystem.add('/topics')
-      FakeFS::FileSystem.add('/topics/topic1')
-      FakeFS::File.write('/topics/topic1/topic.yaml', YAML.dump(
-          {
-              'id' => 'topic_1',
-              'title' => 'Special topic',
-              'aliases' => [
-                  'alias1'
-              ]
-          }
-      ))
-      FakeFS::FileSystem.add('/topics/other')
-      FakeFS::File.write('/topics/other/topic.yaml', YAML.dump(
-          {
-              'title' => 'Other topic'
-          }
-      ))
-      FakeFS::FileSystem.add('/topics/third')
+    with_testdata do
       @repository = Topicz::Repository.new('/topics')
+      topics = @repository.find_all
+      expect(topics.length).to be 3
     end
   end
 end
