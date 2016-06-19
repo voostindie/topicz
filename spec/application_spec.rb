@@ -23,11 +23,10 @@ factory = DummyCommandFactory.new
 describe Topicz::Application do
 
   it 'prints help when called with -h' do
-    begin
-      expect { Topicz::Application.new(['-h'], factory) }.to output(/Usage: topicz/).to_stdout
-    rescue Exception => e
-      expect(e.message).to eq 'exit'
-    end
+    expect {
+      Topicz::Application.new(['-h'], factory)
+    }.to output(/Usage: topicz/).to_stdout
+             .and raise_error(/exit/)
   end
 
   it 'has no command when no command is specified' do

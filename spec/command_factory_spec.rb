@@ -12,12 +12,9 @@ describe Topicz::CommandFactory do
   end
 
   it 'accepts only known commands' do
-    begin
+    expect {
       Topicz::CommandFactory.new.load_command 'foo'
-      fail 'Exception expected!'
-    rescue Exception => e
-      expect(e.message).to eq 'Unsupported command: foo'
-    end
+    }.to raise_error(/Unsupported command: foo/)
   end
 
 end
