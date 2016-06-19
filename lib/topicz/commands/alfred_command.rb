@@ -29,6 +29,7 @@ module Topicz::Commands
       items = []
       topics.each do |topic|
         items << {
+            # https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
             uid: topic.fullpath, # Affects the ordering in Alfred, based on learning
             type: 'file',
             title: topic.title,
