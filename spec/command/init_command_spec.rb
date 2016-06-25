@@ -52,7 +52,7 @@ describe Topicz::Commands::InitCommand do
 
   it 'supports an alternative configuration file' do
     FakeFS do
-      init = Topicz::Commands::InitCommand.new({}, ['-c', '/config', '/tmp'])
+      init = Topicz::Commands::InitCommand.new({}, %w(-c /config /tmp))
       expect { init.create_configuration }.to output(/\/config/).to_stdout
       expect(File.exist? '/config').to be true
     end

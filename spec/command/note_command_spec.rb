@@ -15,7 +15,7 @@ describe Topicz::Commands::NoteCommand do
       date = DateTime.now.strftime("%Y-%m-%d")
       filename = "/topics/topic1/Notes/#{date} Foo.md"
       expect {
-        Topicz::Commands::NoteCommand.new(nil, ['-s', 'topic_1', 'Foo'], DummyKernel.new).execute
+        Topicz::Commands::NoteCommand.new(nil, %w(-s topic_1 Foo), DummyKernel.new).execute
       }.to output("foo-editor \"#{filename}\"").to_stdout
       expect(File.exist?(filename)).to be true
       expect(File.readlines(filename)[0]).to eq "# Special topic - Foo\n"
@@ -27,7 +27,7 @@ describe Topicz::Commands::NoteCommand do
       date = DateTime.now.strftime("%Y-%m-%d %H%M")
       filename = "/topics/topic1/Notes/#{date}.md"
       expect {
-        Topicz::Commands::NoteCommand.new(nil, ['-s', 'topic_1'], DummyKernel.new).execute
+        Topicz::Commands::NoteCommand.new(nil, %w(-s topic_1), DummyKernel.new).execute
       }.to output("foo-editor \"#{filename}\"").to_stdout
       expect(File.exist?(filename)).to be true
       expect(File.readlines(filename)[0]).to eq "# Special topic - Unnamed note\n"
@@ -41,7 +41,7 @@ describe Topicz::Commands::NoteCommand do
       FakeFS::FileSystem.add('/topics/topic1/Notes')
       File.write(filename, 'DUMMY FILE')
       expect {
-        Topicz::Commands::NoteCommand.new(nil, ['-s', 'topic_1', 'Foo'], DummyKernel.new).execute
+        Topicz::Commands::NoteCommand.new(nil, %w(-s topic_1 Foo), DummyKernel.new).execute
       }.to output("foo-editor \"#{filename}\"").to_stdout
       expect(File.exist?(filename)).to be true
       expect(File.readlines(filename)[0]).to eq 'DUMMY FILE'

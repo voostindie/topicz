@@ -138,7 +138,7 @@ describe Topicz::Commands::AlfredCommand do
               }
           }
       ]}.to_json + "\n"
-      expect { Topicz::Commands::AlfredCommand.new(nil, ['-m', 'journal', 'Special']).execute }.to output(expected).to_stdout
+      expect { Topicz::Commands::AlfredCommand.new(nil, %w(-m journal Special)).execute }.to output(expected).to_stdout
     end
   end
 
@@ -157,14 +157,14 @@ describe Topicz::Commands::AlfredCommand do
               }
           }
       ]}.to_json + "\n"
-      expect { Topicz::Commands::AlfredCommand.new(nil, ['-m', 'note', 'Special']).execute }.to output(expected).to_stdout
+      expect { Topicz::Commands::AlfredCommand.new(nil, %w(-m note Special)).execute }.to output(expected).to_stdout
     end
   end
 
   it 'raises an error on an unknown mode' do
     with_testdata do
       expect {
-        Topicz::Commands::AlfredCommand.new(nil, ['-m', 'unsupported', 'Special']).execute
+        Topicz::Commands::AlfredCommand.new(nil, %w(-m unsupported Special)).execute
       }.to raise_error(/Invalid mode: 'unsupported'/)
     end
   end

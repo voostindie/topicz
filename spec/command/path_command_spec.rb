@@ -32,7 +32,7 @@ describe Topicz::Commands::PathCommand do
   it 'does a strict ID match when using --strict' do
     with_testdata do
       expect {
-        Topicz::Commands::PathCommand.new(nil, ['-s', 'topic_1']).execute
+        Topicz::Commands::PathCommand.new(nil, %w(-s topic_1)).execute
       }.to output('/topics/topic1').to_stdout
     end
   end
