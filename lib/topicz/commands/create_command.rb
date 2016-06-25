@@ -5,6 +5,7 @@ require 'zaru'
 require 'fileutils'
 
 module Topicz::Commands
+
   class CreateCommand < RepositoryCommand
 
     def initialize(config_file = nil, arguments = [])

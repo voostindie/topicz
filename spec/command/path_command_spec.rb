@@ -29,6 +29,14 @@ describe Topicz::Commands::PathCommand do
     end
   end
 
+  it 'does a strict ID match when using --strict' do
+    with_testdata do
+      expect {
+        Topicz::Commands::PathCommand.new(nil, ['-s', 'topic_1']).execute
+      }.to output('/topics/topic1').to_stdout
+    end
+  end
+
   it 'supports help' do
     expect(Topicz::Commands::PathCommand.new.option_parser.to_s).to include 'Prints the absolute path'
   end

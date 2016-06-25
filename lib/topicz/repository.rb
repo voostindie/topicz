@@ -31,6 +31,10 @@ module Topicz
       end
     end
 
+    def [](id)
+      @topics[id]
+    end
+
     def exist_title?(title)
       @topics.values.any? { |t| t.title == title }
     end
@@ -73,8 +77,9 @@ module Topicz
     # The filter may be `nil`, in which case it is said to match.
     def matches(filter)
       return true unless filter
-      filter.downcase!
+      filter = filter.downcase
       @title.downcase.include?(filter) ||
+          @id.downcase.include?(filter) ||
           !(@aliases.select { |a| a.downcase.include?(filter) }.empty?) ||
           @path.downcase.include?(filter)
     end

@@ -34,6 +34,15 @@ describe Topicz::Repository do
     end
   end
 
+  it 'should find a topic based on the id' do
+    with_testdata do
+      repository = Topicz::Repository.new('/topics')
+      topics = repository.find_all('four')
+      expect(topics.length).to be 1
+      expect(topics[0].id).to eq '4'
+    end
+  end
+
   it 'should find a topic based on the title' do
     with_testdata do
       repository = Topicz::Repository.new('/topics')
@@ -56,7 +65,7 @@ describe Topicz::Repository do
     with_testdata do
       repository = Topicz::Repository.new('/topics')
       topics = repository.find_all
-      expect(topics.length).to be 3
+      expect(topics.length).to be 4
     end
   end
 end

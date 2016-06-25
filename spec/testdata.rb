@@ -6,7 +6,6 @@ def with_testdata(&block)
             'repository' => '/topics'
         }
     ))
-    FakeFS::FileSystem.add('/topics')
     FakeFS::FileSystem.add('/topics/topic1')
     FakeFS::File.write('/topics/topic1/topic.yaml', YAML.dump(
         {
@@ -24,6 +23,15 @@ def with_testdata(&block)
         }
     ))
     FakeFS::FileSystem.add('/topics/third')
+    FakeFS::FileSystem.add('/topics/fourth')
+    FakeFS::File.write('/topics/fourth/topic.yaml', YAML.dump(
+        {
+            'id' => '4'
+        }
+    ))
+    editor = ENV['EDITOR']
+    ENV['EDITOR'] = 'foo-editor'
     yield block
+    ENV['EDITOR'] = editor
   end
 end

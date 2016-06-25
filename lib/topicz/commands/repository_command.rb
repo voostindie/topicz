@@ -37,5 +37,25 @@ module Topicz::Commands
       end
       Topicz::Repository.new(directory)
     end
+
+    def find_exactly_one_topic(filter, strict)
+      if strict
+        topic = @repository[filter]
+        if topic == nil
+          raise "No topic found with ID: '#{filter}'"
+        end
+        topic
+      else
+        topics = @repository.find_all filter
+        if topics.length == 0
+          raise "No topics found matching the search filter: '#{filter}'"
+        end
+        if topics.length > 1
+          matches = topics.map { |t| t.title }.join("\n")
+          raise "Multiple topics match the search filter: '#{filter}'. Matches:\n#{matches}"
+        end
+        topics[0]
+      end
+    end
   end
 end
