@@ -4,7 +4,10 @@ module Topicz
 
   class Repository
 
+    attr_reader :root
+
     def initialize(root)
+      @root = root
       @topics = {}
       errors = []
       Dir.foreach(root) do |path|
@@ -26,6 +29,10 @@ module Topicz
       unless errors.empty?
         raise errors
       end
+    end
+
+    def exist_title?(title)
+      @topics.values.any? { |t| t.title == title }
     end
 
     def topics

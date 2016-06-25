@@ -4,7 +4,8 @@ module Topicz
       'init' => 'Initializes a new topic repository',
       'help' => 'Shows help about a command',
       'alfred' => 'Searches in Alfred Script Filter format',
-      'path' => 'Prints the full path to a topic'
+      'path' => 'Prints the full path to a topic',
+      'create' => 'Creates a new topic'
   }
 
   def COMMANDS.to_s
