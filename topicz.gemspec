@@ -13,12 +13,6 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Topicz is a filesystem based topic administration tool. All it does is manipulate files and directories. But it does so in a structured way, helping you to keep track of your own documents, reference material, and topic relationships.}
   spec.homepage      = "https://github.com/voostindie/topicz"
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "'http://localhost:8081'" # Local Nexus instance
-  else
-    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
-  end
-
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
