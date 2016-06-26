@@ -16,7 +16,7 @@ See below (*Development*) in case you’re working with a Git clone directly.
     Usage: topicz [options] <command> [options]
         -c, --config FILE  Uses FILE as the configuration file
 
-    Where <command> is one of: 
+    Where <command> is one of:
 
       init   : Initializes a new topic repository
       create : Creates a new topic
@@ -52,7 +52,7 @@ A topic repository is nothing more than a directory on disk. This directory has 
 
 The `topic.yaml` file is entirely optional. More information on that later.
 
-A topic can certainly have other subdirectories than the ones shown above. These four are the ones I always use. Where needed I add more. For example when I go to a conference, I typically add the directories `Travel` and `Bills`. 
+A topic can certainly have other subdirectories than the ones shown above. These four are the ones I always use. Where needed I add more. For example when I go to a conference, I typically add the directories `Travel` and `Bills`.
 
 ### Documents and Reference Material
 
@@ -60,7 +60,7 @@ The `Documents` and `Reference Material` directories speak for themselves. The f
 
 ### Journal
 
-The `Journal` directory is more interesting. It contains Markdown files only, and each filename follows the pattern `<year>-week-<week>.md`. If there was some kind of progress on a topic in a certain week, I describe it here. Every week I send a progress report to my colleagues about all the topics I worked on. Topicz’s `report` command creates this report for me automatically from the separate journal entries. And of course Topicz also helps me creating and opening the right journal files, depending on the topic I work on. 
+The `Journal` directory is more interesting. It contains Markdown files only, and each filename follows the pattern `<year>-week-<week>.md`. If there was some kind of progress on a topic in a certain week, I describe it here. Every week I send a progress report to my colleagues about all the topics I worked on. Topicz’s `report` command creates this report for me automatically from the separate journal entries. And of course Topicz also helps me creating and opening the right journal files, depending on the topic I work on.
 
 ### Notes
 
@@ -72,7 +72,7 @@ Topicz needs to know just one thing: where your repository is. You stick this in
 
 The first time you use Topicz, just do this:
 
-    $ topics init /path/to/my/topic/repository
+    $ topicz init /path/to/my/topic/repository
 
 Topicz will do two things. First it will create an empty directory at the location you specified. Secondly it will write this location into `~/.topiczrc`.
 
