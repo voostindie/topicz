@@ -19,7 +19,7 @@ describe Topicz::Commands::JournalCommand do
         Topicz::Commands::JournalCommand.new(nil, %w(-s topic_1), DummyKernel.new).execute
       }.to output("foo-editor \"#{filename}\"").to_stdout
       expect(File.exist?(filename)).to be true
-      expect(File.readlines(filename)[0]).to eq "# Special topic - Week 25, 2016\n"
+      expect(File.readlines(filename)[0]).to eq "# Special topic - Week #{week}, 2016\n"
     end
   end
 
