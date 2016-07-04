@@ -29,7 +29,7 @@ describe Topicz::Commands::CreateCommand do
       expect(File.exist?('/topics/new/Documents')).to be true
       expect(File.exist?('/topics/new/Journal')).to be true
       expect(File.exist?('/topics/new/Notes')).to be true
-      expect(File.exist?('/topics/new/Reference')).to be true
+      expect(File.exist?('/topics/new/Reference Material')).to be true
       expect(File.exist?('/topics/new/topic.yaml')).to be false
     end
   end
