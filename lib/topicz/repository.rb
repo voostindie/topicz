@@ -6,12 +6,14 @@ module Topicz
 
     attr_reader :root
 
-    def initialize(root)
+    def initialize(root, exclude_filters = [])
       @root = root
       @topics = {}
       errors = []
+      excludes = exclude_filters.map { | filter | Regexp.new(filter) }
       Dir.foreach(root) do |path|
         next if path.start_with?('.')
+        next if excludes.any? { | regexp | path =~ regexp }
         next unless File.directory?(File.join(root, path))
         topic = Topic.new(root, path)
         if @topics.has_key?(topic.id)

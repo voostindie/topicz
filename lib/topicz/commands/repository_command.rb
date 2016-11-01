@@ -35,7 +35,11 @@ module Topicz::Commands
       unless Dir.exist? directory
         raise "Repository directory doesn't exist: #{directory}."
       end
-      Topicz::Repository.new(directory)
+      Topicz::Repository.new(directory, process_excludes(@config['excludes']))
+    end
+
+    def process_excludes(excludes_config)
+      [excludes_config].compact.flatten
     end
 
     def find_exactly_one_topic(filter, strict)

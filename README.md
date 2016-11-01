@@ -78,6 +78,8 @@ Topicz will do two things. First it will create an empty directory at the locati
 
 Some commands call an external text editor, for example to edit journals and notes. By default Topicz will use the `EDITOR` environment variable. You can override it on a per-repository basis by defining an `editor` property in the configuration file.
 
+Maybe you put some directories in the repositories that you want Topicz to ignore. No problem: define a property `excludes`, with either a single value or an array of values. Each value must be a regular expression. For example, I use `^_` to skip all directories that start with an underscore.
+
 ## Topic configuration
 
 Each topic directory can have a `topic.yaml` file in it, which holds a YAML file describing that topic. It looks as follows:

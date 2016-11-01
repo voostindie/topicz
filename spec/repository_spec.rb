@@ -68,4 +68,28 @@ describe Topicz::Repository do
       expect(topics.length).to be 4
     end
   end
+
+  it 'should skip all topics that match a single exclusion filter' do
+    with_testdata do
+      repository = Topicz::Repository.new('/topics', ['third'])
+      topics = repository.find_all
+      expect(topics.length).to be 3
+    end
+  end
+
+  it 'should skip all topics that match one of multiple exclusion filters' do
+    with_testdata do
+      repository = Topicz::Repository.new('/topics', ['third', 'other'])
+      topics = repository.find_all
+      expect(topics.length).to be 2
+    end
+  end
+
+  it 'should skip all topics that match a regular expression' do
+    with_testdata do
+      repository = Topicz::Repository.new('/topics', ['^t']) # Skips 'topic1' and 'third'
+      topics = repository.find_all
+      expect(topics.length).to be 2
+    end
+  end
 end
