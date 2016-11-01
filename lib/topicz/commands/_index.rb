@@ -3,6 +3,7 @@ module Topicz
   COMMANDS = {
       'init'    => 'Initializes a new topic repository',
       'create'  => 'Creates a new topic',
+      'list'    => 'Lists topics',
       'path'    => 'Prints the full path to a topic',
       'journal' => 'Opens a (new) weekly journal entry for a topic',
       'note'    => 'Opens a new note for a topic',
