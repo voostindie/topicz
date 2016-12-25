@@ -58,7 +58,7 @@ A topic can certainly have other subdirectories than the ones shown above. These
 
 ### Documents and Reference Material
 
-The `Documents` and `Reference Material` directories speak for themselves. The first is for stuff I create, the second for stuff that others create. Files and subdirectories in these directories must have filenames that are prefixed with the date in `YYYY-mm-DD`. That keeps the files in the right order, and it makes the files show up in the `stats` command.
+The `Documents` and `Reference Material` directories speak for themselves. The first is for stuff I create, the second for stuff that others create. Files and subdirectories in these directories must have filenames that are prefixed with the date in `YYYY-mm-DD` format. That keeps the files in the right order, and it makes the files show up in the `stats` command.
 
 ### Journal
 
