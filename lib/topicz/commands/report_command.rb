@@ -1,5 +1,4 @@
 require_relative 'repository_command'
-require 'json'
 
 module Topicz::Commands
 
@@ -10,7 +9,6 @@ module Topicz::Commands
       @week = Date.today.cweek
       @year = Date.today.cwyear
       option_parser.order! arguments
-      @filter = arguments.join ' '
     end
 
     def option_parser
@@ -23,7 +21,7 @@ module Topicz::Commands
           @year = year.to_i
         end
         options.separator ''
-        options.separator 'Generates a weekly report from all journals across all topics.'
+        options.separator 'Generates a weekly report from all journals across all topics in a single Markdown file.'
       end
     end
 
