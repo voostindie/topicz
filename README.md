@@ -20,11 +20,13 @@ See below (*Development*) in case you’re working with a Git clone directly.
 
       init   : Initializes a new topic repository
       create : Creates a new topic
+      list   : List topics
       path   : Prints the full path to a topic
       journal: Opens a (new) weekly journal entry for a topic
       note   : Opens a new note for a topic
-      alfred : Searches in Alfred Script Filter format
+      stats  : Generates weekly statistics across all topics
       report : Generates a weekly report of all topics
+      alfred : Searches in Alfred Script Filter format
       help   : Shows help about a command
 
 ## Background
@@ -56,7 +58,7 @@ A topic can certainly have other subdirectories than the ones shown above. These
 
 ### Documents and Reference Material
 
-The `Documents` and `Reference Material` directories speak for themselves. The first is for stuff I create, the second for stuff that others create. There are no rules as to the files and subdirectories in these directories, although I tend to prefix each filename with the date I created or received the file in `YYYY-mm-DD` format. But that’s just my way of keeping things organized.
+The `Documents` and `Reference Material` directories speak for themselves. The first is for stuff I create, the second for stuff that others create. Files and subdirectories in these directories must have filenames that are prefixed with the date in `YYYY-mm-DD`. That keeps the files in the right order, and it makes the files show up in the `stats` command.
 
 ### Journal
 
@@ -101,7 +103,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Plans
 
-* Allow topics to be archived when no longer relevant.
+* Allow topics to be archived and unarchived when no longer relevant.
 * Allow relationships between topics to be defined in the YAML files, and use these to generate graphs for Graphviz: `depends-on`, `part-of`, `relates-to`. The CLI will help to guarantee correctness, for example when archiving a topic, or when renaming one’s title and/or ID.
 * Allow metadata to be defined for each topic, like main stakeholders, categories and topic goals.
 
