@@ -2,6 +2,10 @@
 
 Topicz is a simple topic repository administration tool, where the repository is a regular filesystem.
 
+## Project archived!
+
+(19-09-2021): I haven't used this tool myself in *years* and have changed my way of working drastically, so I don't expect I ever will again. High time to move this tool to the archive!
+
 ## Installation
 
 Install it as:
